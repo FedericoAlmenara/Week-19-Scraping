@@ -1,0 +1,42 @@
+.bg-primary{
+   background-color:  #2196F3 !important;
+}
+
+.background-list{
+    list-style-type : none;
+}
+html, body{
+    height: 100%;
+    width: 100%;
+}
+.navbar{
+    color: #234153;
+    padding: 1% 0%;
+    font-size: 1.2em;
+}
+.navbar-brand{
+    text-decoration-style: solid;
+    color: aliceblue;
+}
+
+#home{
+    background: url(../images/buenos-aires-image1.jpg) no-repeat center center fixed;
+    display:  table;
+    height: 100%;
+    position: relative;
+    width: 100%;
+    background-size: cover;
+    background-position-y: -1%;
+}
+.landing-text{
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+.padding{
+    padding: 80px 0px;
+}
+
+a#centerScrapeButton{
+    color: antiquewhite;
+}
