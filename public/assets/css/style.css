@@ -16,7 +16,7 @@ html, body{
 }
 .navbar-brand{
     text-decoration-style: solid;
-    color: aliceblue;
+    color: yellow;
 }
 
 #home{
@@ -32,6 +32,7 @@ html, body{
     display: table-cell;
     text-align: center;
     vertical-align: middle;
+    color: aliceblue;
 }
 .padding{
     padding: 80px 0px;
@@ -39,4 +40,21 @@ html, body{
 
 a#centerScrapeButton{
     color: antiquewhite;
+}
+#navbar-toggle{
+    background-color: aliceblue !important;
+}
+.navbar-toggle{
+    background-color: aliceblue !important;
+}
+.nav-item{
+    padding-right: 10px; 
+    padding-top: 20px;
+    color: aliceblue;
+}
+.navbar-nav{
+    list-style-type: none;
+}
+.nav-item a{
+    color: aliceblue;   
 }
