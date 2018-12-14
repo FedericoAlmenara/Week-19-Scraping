@@ -83,7 +83,7 @@ $("article .listaNotas").each(function (i, element) {
             .find("div")
             .find("h4")
             .text();
-            scrapedData.headline = $(this)
+        scrapedData.headline = $(this)
             .find("div")
             .find("h3")
             .text();
@@ -103,7 +103,7 @@ $("article .listaNotas").each(function (i, element) {
 
         });
 
-        console.log(result);
+     console.log(scrapedData);
 
     });
 
