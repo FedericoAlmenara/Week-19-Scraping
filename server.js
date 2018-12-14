@@ -36,9 +36,9 @@ app.set("view engine", "handlebars");
 //app.use(routes);
 
 // Start our server so that it can begin listening to client requests.
-app.listen(PORT, function() {
-  // Log (server-side) when our server has started
-  console.log("Server listening on: http://localhost:" + PORT);
+app.listen(PORT, function () {
+    // Log (server-side) when our server has started
+    console.log("Server listening on: http://localhost:" + PORT);
 });
 
 var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongolab-opaque-63706";
@@ -49,53 +49,68 @@ mongoose.connect(MONGODB_URI, { useNewUrlParser: true });
 var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', function() {
-  console.log(`connected on Mongoose:`, db)
+db.once('open', function () {
+    console.log(`connected on Mongoose:`, db)
 });
 
 
 console.log("\n***********************************\n" +
-            "Grabbing every thread name and link\n" +
-            "from Buenos Aires Time's website:" +
-            "\n***********************************\n");
+    "Grabbing every thread name and link\n" +
+    "from Buenos Aires Time's website:" +
+    "\n***********************************\n");
 
 // Making a request via axios for reddit's "webdev" board. The page's HTML is passed as the callback's third argument
-axios.get("http://www.batimes.com.ar/section/argentina/").then(function(response) {
+axios.get("http://www.batimes.com.ar/section/argentina/").then(function (response) {
 
-  // Load the HTML into cheerio and save it to a variable
-  // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
-  var $ = cheerio.load(response.data);
+    // Load the HTML into cheerio and save it to a variable
+    // '$' becomes a shorthand for cheerio's selector commands, much like jQuery's '$'
+var $ = cheerio.load(response.data);
 
-  // An empty array to save the data that we'll scrape
-  var results = [];
+    // An empty array to save the data that we'll scrape
 
-  // With cheerio, find each p-tag with the "title" class
-  // (i: iterator. element: the current element)
-  $("article.listaNotas").each(function(i, element) {
+    // With cheerio, find each p-tag with the "title" class
+    // (i: iterator. element: the current element)
+$("article .listaNotas").each(function (i, element) {
+    var scrapedData = {};
+        // Save the text of the element in a "title" variable   
+        scrapedData.link = $(this)
+        .find("figure")
+            .find("a")
+            .attr("href");
+        // In the currently selected element, look at its child elements (i.e., its a-tags),
+        // then save the values for any "href" attributes that the child elements may have
+        scrapedData.title = $(this)
+            .find("div")
+            .find("h4")
+            .text();
+            scrapedData.headline = $(this)
+            .find("div")
+            .find("h3")
+            .text();
 
-    // Save the text of the element in a "title" variable
-    var link = $(element).find("figure").find("a").attr("href");
+        
+ 
+            db.Article.create(scrapedData)
+            .then(function(dbArticle) {
+              // View the added result in the console
+              console.log(dbArticle);
+            })
+            .catch(function(err) {
+              // If an error occurred, log it
+              console.log(err);
+            });
+        // Save these results in an object that we'll push into the results array we defined earlier
 
-    // In the currently selected element, look at its child elements (i.e., its a-tags),
-    // then save the values for any "href" attributes that the child elements may have
-    
-    
-    
-    var title = $(this).find("div").find("h4").text();
+        });
 
-    let headline = $(this).find("div").find("h3").text();
+        console.log(result);
 
-    // Save these results in an object that we'll push into the results array we defined earlier
-    results.push({
-      title: title,
-      link: link,
-      headline: headline,
     });
-  });
+
+
+    // Log the results once you've looped through each of the elements found with cheerio
+  //  console.log(result);
 
 
 
-  // Log the results once you've looped through each of the elements found with cheerio
-  console.log(results);
-});
 
