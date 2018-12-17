@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Node Scraper</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+
     <!--<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
         crossorigin="anonymous"></script> -->
     <!-- Latest compiled and minified CSS -->
@@ -19,8 +22,6 @@
         crossorigin="anonymous"></script>
 
     <link rel="stylesheet" type="text/css" href="assets/css/style.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-        crossorigin="anonymous"></script>
 
 </head>
 
@@ -43,7 +44,7 @@
                             <a class "nav-link" href="#">Saved Articles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="btn btn-warning scrape-new">SCRAPE NEW ARTICLES!</a>
+                            <a class="btn btn-warning btn-sm scrape-new">SCRAPE NEW ARTICLES!</a>
                         </li>
                         <li class="nav-item">
                             <a href="#"></a>
@@ -56,22 +57,28 @@
     <div id="home">
         <div class="landing-text">
             <h1>Web Scraping With Mongo</h1>
-            <h3>Clarín (Argentina) Edition</h3>
-            <button class="btn btn-warning btn-md" id="centerScrapeButton">
-                <a href="#" class="btn btn-caution btn-lg" id="centerScrapeButton">Scrape New Articles</a>
+            <h3>Buenos Aires Times (Argentina) Edition</h3>
+            <button class="btn btn-warning" id="centerScrapeButton" onclick="scrape()">Scrape New Articles
+                <!--<button class="btn btn-caution btn-lg" id="centerScrapeButton">Scrape New Articles</a>-->
             </button>
         </div>
     </div>
     <div class="padding">
         <div class="container">
-            <div class="row" id="articles">
-                <h3>Top 3 Articles in Argentina, according to Clarín.</h3>
+            <div class="row">
+                <h3>Top 3 Articles in Argentina, according to the Buenos Aires Times.</h3>
             </div>
-            
+            <div class="row">
+                <div class="col-md-8" id="articles">
+                    <div class="card">
+
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     </div>
-    <div id="articles"></div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
    
     <script src="./assets/javascript/app.js"></script>

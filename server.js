@@ -9,6 +9,7 @@ var cheerio = require("cheerio");
 var axios = require("axios");
 
 var express = require("express");
+var morgan = require("morgan");
 var mongoose = require("mongoose");
 
 var PORT = process.env.PORT || 8080;
@@ -16,6 +17,8 @@ var PORT = process.env.PORT || 8080;
 var app = express();
 
 var db = require("./models");
+
+app.use(morgan('combined'));
 
 // Serve static content for the app from the "public" directory in the application directory.
 app.use(express.static("public"));
@@ -67,6 +70,8 @@ console.log("\n***********************************\n" +
 
 
 var results = [];
+
+app.get("/scrape", function(req, res) {
 // Making a request via axios for reddit's "webdev" board. The page's HTML is passed as the callback's third argument
 axios.get("http://www.batimes.com.ar/section/argentina/").then(function(response) {
 
@@ -106,22 +111,23 @@ axios.get("http://www.batimes.com.ar/section/argentina/").then(function(response
       // If an error occurred, log it
       console.log(err);
     });
-  });
-
-      // Create a new Article using the `result` object built from scraping
-
-  // Log the results once you've looped through each of the elements found with cheerio
-  //console.log(results);
-//   db.Article.create(results)
-//   .then(function(dbArticle) {
-//     // View the added result in the console
-//     console.log(dbArticle);
-//   })
-//   .catch(function(err) {
-//     // If an error occurred, log it
-//     console.log(err);
-//   });
+    });
+    res.send("Scrape completed!")
 });
 
-    // Log the results once you've looped through each of the elements found with cheerio
-  //  console.log(result);
+});
+
+// Route for getting all Articles from the db
+app.get("/articles", function(req, res) {
+    // Grab every document in the Articles collection
+    db.Article.find({})
+      .then(function(dbArticle) {
+        // If we were able to successfully find Articles, send them back to the client
+        res.json(dbArticle);
+      })
+      .catch(function(err) {
+        // If an error occurred, send it to the client
+        res.json(err);
+      });
+  });
+  
